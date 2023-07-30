@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "counterInfo": "The value is at:",
+    "reset":"Reset values",
+    "language":"Change the language",
+    "theme":"Change the theme",
+    "increment": "Increment",
+    "decrement":"Decrement",
+    "exit":"Exit the App",
+    "exit_msg": "Do you want to exit the App?",
+    "yes":"Yes",
+    "no":"No",
+    "list_title":"List Example",
+    "detail_title":"Detail"
+}
