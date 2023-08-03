@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../repository/contato_repository.dart';
 import 'contato_events.dart';
 import 'contato_state.dart';

@@ -3,16 +3,14 @@ import 'package:new_app_drift/database/database.dart';
 import '../model/contato_model.dart';
 
 class ContatoRepository {
-  List<ContatoModel>? getContatos() {
+  Future<List<ContatoModel>?> getContatos() async {
     final Database db = GetIt.instance<Database>();
-    final maps = db.customSelect('select * from users');
-    return List.empty();
-    // return List.generate(maps., (i) {
-    //   return ContatoModel(
-    //     nome: maps[i]['nome'],
-    //     contato: maps[i]['contato'],
-    //     id: maps[i]['id'],
-    //   );
-    // });
+
+    return db.customSelect('select id, name from users').get().then((rows) {
+      return rows
+          .map((row) => ContatoModel(
+              id: row.read<int>('id'), name: row.read<String>('name')))
+          .toList();
+    });
   }
 }

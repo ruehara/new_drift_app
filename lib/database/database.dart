@@ -25,12 +25,10 @@ class Database extends $Database {
         for (var step = from + 1; step <= to; step++) {
           switch (step) {
             case 2:
-
               // column was added in version 2.
               await m.addColumn(teste, teste.teste2);
               break;
             case 3:
-
               // column was added in version 3.
               await m.addColumn(teste, teste.teste3);
               break;

@@ -3,21 +3,18 @@ import 'package:equatable/equatable.dart';
 class ContatoModel extends Equatable {
   const ContatoModel({
     required this.id,
-    required this.contato,
-    required this.nome,
+    required this.name,
   });
-  final String nome;
+  final String name;
   final int id;
-  final String contato;
 
   @override
-  List<Object> get props => [nome, id, contato];
+  List<Object> get props => [name, id];
 
   Map<dynamic, dynamic> toMap() {
     return {
-      'nome': nome,
+      'name': name,
       'id': id,
-      'contato': contato,
     };
   }
 
@@ -27,9 +24,8 @@ class ContatoModel extends Equatable {
     }
 
     return ContatoModel(
-      nome: map['nome'].toString(),
+      name: map['name'].toString(),
       id: int.tryParse(map['id'].toString()) ?? 0,
-      contato: map['contato'].toString(),
     );
   }
 }

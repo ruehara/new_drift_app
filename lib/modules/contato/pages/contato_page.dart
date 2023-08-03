@@ -28,7 +28,7 @@ class ContatoPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is ContatoLoadedState) {
-                List<ContatoModel>? userList = state.contatos;
+                List<ContatoModel>? userList = state.contatos; //state.contatos;
                 return ListView.builder(
                   itemCount: userList?.length,
                   itemBuilder: (_, index) {
@@ -38,8 +38,7 @@ class ContatoPage extends StatelessWidget {
                         mouseCursor: SystemMouseCursors.click,
                         dense: true,
                         visualDensity: VisualDensity.compact,
-                        title: Text(
-                            '${userList?[index].contato} ${userList?[index].nome}'),
+                        title: Text('${userList?[index].name}'),
                       ),
                     );
                   },
