@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/database/tables/users.drift.dart';
 import '../blocs/contato_bloc.dart';
 import '../blocs/contato_events.dart';
 import '../blocs/contato_state.dart';
@@ -28,7 +29,7 @@ class ContatoPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is ContatoLoadedState) {
-                List<ContatoModel>? userList = state.contatos; //state.contatos;
+                List<User>? userList = state.contatos; //state.contatos;
                 return ListView.builder(
                   itemCount: userList?.length,
                   itemBuilder: (_, index) {

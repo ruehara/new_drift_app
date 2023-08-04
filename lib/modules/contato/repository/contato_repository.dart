@@ -1,15 +1,15 @@
 import 'package:new_app_drift/app/library.dart';
 import 'package:new_app_drift/database/database.dart';
-import '../model/contato_model.dart';
+import 'package:new_app_drift/database/tables/users.drift.dart';
 
 class ContatoRepository {
-  Future<List<ContatoModel>?> getContatos() async {
+  Future<List<User>?> getContatos() async {
     final Database db = GetIt.instance<Database>();
 
     return db.customSelect('select id, name from users').get().then((rows) {
       return rows
-          .map((row) => ContatoModel(
-              id: row.read<int>('id'), name: row.read<String>('name')))
+          .map((row) =>
+              User(id: row.read<int>('id'), name: row.read<String>('name')))
           .toList();
     });
   }

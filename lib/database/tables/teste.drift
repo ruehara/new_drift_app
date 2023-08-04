@@ -1,11 +1,10 @@
-import 'users.drift';
 
 CREATE TABLE teste (
   id INTEGER PRIMARY KEY,
   teste TEXT, 
   teste2 TEXT,
   teste3 TEXT,
-  author INTEGER NOT NULL REFERENCES users (id),
+  teste4 TEXT,
   content TEXT
 );
 

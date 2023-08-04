@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../model/contato_model.dart';
+import 'package:new_app_drift/database/tables/users.drift.dart';
 
 @immutable
 abstract class ContatoState extends Equatable {}
@@ -13,7 +12,7 @@ class ContatoLoadingState extends ContatoState {
 
 class ContatoLoadedState extends ContatoState {
   ContatoLoadedState(this.contatos);
-  final List<ContatoModel>? contatos;
+  final List<User>? contatos;
   @override
   List<Object?> get props => [contatos];
 }

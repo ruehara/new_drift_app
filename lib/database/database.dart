@@ -1,14 +1,14 @@
 import 'package:drift/drift.dart';
-import 'accessor.dart';
+import 'package:new_app_drift/database/accessor.dart';
 
 import 'database.drift.dart';
 
 @DriftDatabase(
   include: {
-    'src/user_queries.drift',
-    'src/posts.drift',
-    'src/search.drift',
-    'src/teste.drift'
+    'tables/user_queries.drift',
+    'tables/posts.drift',
+    'tables/search.drift',
+    'tables/teste.drift'
   },
   daos: [MyAccessor],
 )
@@ -16,7 +16,7 @@ class Database extends $Database {
   Database(super.e);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {
@@ -31,6 +31,10 @@ class Database extends $Database {
             case 3:
               // column was added in version 3.
               await m.addColumn(teste, teste.teste3);
+              break;
+            case 4:
+              // column was added in version 4.
+              await m.addColumn(teste, teste.teste4);
               break;
           }
         }
