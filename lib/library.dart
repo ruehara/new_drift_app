@@ -1,7 +1,7 @@
 export 'dart:async';
 export 'dart:developer';
 export 'package:flutter/services.dart';
-export 'service_locator.dart';
+export 'app/service_locator.dart';
 export 'package:flutter/foundation.dart';
 export 'package:new_app_drift/app/bootstrap.dart';
 export 'package:bloc/bloc.dart';
@@ -17,3 +17,4 @@ export 'package:new_app_drift/utils/scroll.dart';
 export 'package:new_app_drift/app/router.dart';
 export 'package:new_app_drift/core/theme/cubit/themes.dart';
 export 'package:go_router/go_router.dart';
+export 'package:new_app_drift/utils/constants.dart';

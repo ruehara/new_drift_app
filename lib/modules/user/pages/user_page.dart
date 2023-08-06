@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/library.dart';
 
 import '../blocs/user_bloc.dart';
 import '../blocs/user_events.dart';

@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:new_app_drift/database/accessor.dart';
+import 'package:new_app_drift/database/tables/users.drift.dart';
 
+import 'connection/connection.dart';
 import 'database.drift.dart';
 
 @DriftDatabase(
@@ -40,7 +42,17 @@ class Database extends $Database {
         }
       }),
       beforeOpen: (details) async {
-        if (details.wasCreated) {}
+        await customStatement('PRAGMA foreign_keys = ON');
+
+        if (details.wasCreated) {
+          await batch((b) {
+            b.insert(
+              users,
+              UsersCompanion.insert(name: 'Important'),
+            );
+          });
+        }
+        await validateDatabaseSchema(this);
       },
     );
   }

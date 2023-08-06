@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/library.dart';
 
 class CounterCubit extends Cubit<int> {
   CounterCubit() : super(serviceLocator<AppSharedPreferences>().getCounter());

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/library.dart';
 import 'package:new_app_drift/modules/counter/counter.dart';
 import 'package:new_app_drift/utils/exit_dalog.dart';
 

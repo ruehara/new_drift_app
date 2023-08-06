@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_app_drift/app/library.dart';
-
+import 'package:new_app_drift/library.dart';
 import '../modules/counter/counter.dart';
 
 abstract class AppSharedPreferences {
-  final counterVar = 'counter';
-  final localeVar = 'locale';
-  final themeVar = 'theme';
-
   Locale getLocale();
   int getCounter();
   ThemeMode getThemeMode();

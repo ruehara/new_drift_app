@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/library.dart';
 
 import '../modules/contato/pages/contato_page.dart';
 import '../modules/counter/counter.dart';
@@ -45,7 +45,7 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) {
         UserModel sample = state.extra as UserModel;
         return CustomTransitionPage(
-          transitionDuration: const Duration(seconds: 1),
+          transitionDuration: const Duration(milliseconds: 300),
           key: state.pageKey,
           child: UserDetail(object: sample),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

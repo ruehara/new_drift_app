@@ -1,5 +1,5 @@
 import 'package:drift/native.dart';
-import 'package:new_app_drift/app/library.dart';
+import 'package:new_app_drift/library.dart';
 import 'package:new_app_drift/database/connection/native.dart';
 import 'package:new_app_drift/database/database.dart';
 
