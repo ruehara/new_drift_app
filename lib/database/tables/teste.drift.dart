@@ -41,6 +41,13 @@ class Teste extends i0.Table with i0.TableInfo<Teste, i1.TesteData> {
       type: i0.DriftSqlType.string,
       requiredDuringInsert: false,
       $customConstraints: '');
+  static const i0.VerificationMeta _teste5Meta =
+      const i0.VerificationMeta('teste5');
+  late final i0.GeneratedColumn<String> teste5 = i0.GeneratedColumn<String>(
+      'teste5', aliasedName, true,
+      type: i0.DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   static const i0.VerificationMeta _contentMeta =
       const i0.VerificationMeta('content');
   late final i0.GeneratedColumn<String> content = i0.GeneratedColumn<String>(
@@ -50,11 +57,12 @@ class Teste extends i0.Table with i0.TableInfo<Teste, i1.TesteData> {
       $customConstraints: '');
   @override
   List<i0.GeneratedColumn> get $columns =>
-      [id, teste, teste2, teste3, teste4, content];
+      [id, teste, teste2, teste3, teste4, teste5, content];
   @override
-  String get aliasedName => _alias ?? 'teste';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'teste';
+  String get actualTableName => $name;
+  static const String $name = 'teste';
   @override
   i0.VerificationContext validateIntegrity(i0.Insertable<i1.TesteData> instance,
       {bool isInserting = false}) {
@@ -79,6 +87,10 @@ class Teste extends i0.Table with i0.TableInfo<Teste, i1.TesteData> {
       context.handle(_teste4Meta,
           teste4.isAcceptableOrUnknown(data['teste4']!, _teste4Meta));
     }
+    if (data.containsKey('teste5')) {
+      context.handle(_teste5Meta,
+          teste5.isAcceptableOrUnknown(data['teste5']!, _teste5Meta));
+    }
     if (data.containsKey('content')) {
       context.handle(_contentMeta,
           content.isAcceptableOrUnknown(data['content']!, _contentMeta));
@@ -102,6 +114,8 @@ class Teste extends i0.Table with i0.TableInfo<Teste, i1.TesteData> {
           .read(i0.DriftSqlType.string, data['${effectivePrefix}teste3']),
       teste4: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}teste4']),
+      teste5: attachedDatabase.typeMapping
+          .read(i0.DriftSqlType.string, data['${effectivePrefix}teste5']),
       content: attachedDatabase.typeMapping
           .read(i0.DriftSqlType.string, data['${effectivePrefix}content']),
     );
@@ -122,6 +136,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
   final String? teste2;
   final String? teste3;
   final String? teste4;
+  final String? teste5;
   final String? content;
   const TesteData(
       {required this.id,
@@ -129,6 +144,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
       this.teste2,
       this.teste3,
       this.teste4,
+      this.teste5,
       this.content});
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
@@ -145,6 +161,9 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
     }
     if (!nullToAbsent || teste4 != null) {
       map['teste4'] = i0.Variable<String>(teste4);
+    }
+    if (!nullToAbsent || teste5 != null) {
+      map['teste5'] = i0.Variable<String>(teste5);
     }
     if (!nullToAbsent || content != null) {
       map['content'] = i0.Variable<String>(content);
@@ -167,6 +186,9 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
       teste4: teste4 == null && nullToAbsent
           ? const i0.Value.absent()
           : i0.Value(teste4),
+      teste5: teste5 == null && nullToAbsent
+          ? const i0.Value.absent()
+          : i0.Value(teste5),
       content: content == null && nullToAbsent
           ? const i0.Value.absent()
           : i0.Value(content),
@@ -182,6 +204,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
       teste2: serializer.fromJson<String?>(json['teste2']),
       teste3: serializer.fromJson<String?>(json['teste3']),
       teste4: serializer.fromJson<String?>(json['teste4']),
+      teste5: serializer.fromJson<String?>(json['teste5']),
       content: serializer.fromJson<String?>(json['content']),
     );
   }
@@ -194,6 +217,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
       'teste2': serializer.toJson<String?>(teste2),
       'teste3': serializer.toJson<String?>(teste3),
       'teste4': serializer.toJson<String?>(teste4),
+      'teste5': serializer.toJson<String?>(teste5),
       'content': serializer.toJson<String?>(content),
     };
   }
@@ -204,6 +228,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
           i0.Value<String?> teste2 = const i0.Value.absent(),
           i0.Value<String?> teste3 = const i0.Value.absent(),
           i0.Value<String?> teste4 = const i0.Value.absent(),
+          i0.Value<String?> teste5 = const i0.Value.absent(),
           i0.Value<String?> content = const i0.Value.absent()}) =>
       i1.TesteData(
         id: id ?? this.id,
@@ -211,6 +236,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
         teste2: teste2.present ? teste2.value : this.teste2,
         teste3: teste3.present ? teste3.value : this.teste3,
         teste4: teste4.present ? teste4.value : this.teste4,
+        teste5: teste5.present ? teste5.value : this.teste5,
         content: content.present ? content.value : this.content,
       );
   @override
@@ -221,13 +247,15 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
           ..write('teste2: $teste2, ')
           ..write('teste3: $teste3, ')
           ..write('teste4: $teste4, ')
+          ..write('teste5: $teste5, ')
           ..write('content: $content')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, teste, teste2, teste3, teste4, content);
+  int get hashCode =>
+      Object.hash(id, teste, teste2, teste3, teste4, teste5, content);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -237,6 +265,7 @@ class TesteData extends i0.DataClass implements i0.Insertable<i1.TesteData> {
           other.teste2 == this.teste2 &&
           other.teste3 == this.teste3 &&
           other.teste4 == this.teste4 &&
+          other.teste5 == this.teste5 &&
           other.content == this.content);
 }
 
@@ -246,6 +275,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
   final i0.Value<String?> teste2;
   final i0.Value<String?> teste3;
   final i0.Value<String?> teste4;
+  final i0.Value<String?> teste5;
   final i0.Value<String?> content;
   const TesteCompanion({
     this.id = const i0.Value.absent(),
@@ -253,6 +283,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
     this.teste2 = const i0.Value.absent(),
     this.teste3 = const i0.Value.absent(),
     this.teste4 = const i0.Value.absent(),
+    this.teste5 = const i0.Value.absent(),
     this.content = const i0.Value.absent(),
   });
   TesteCompanion.insert({
@@ -261,6 +292,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
     this.teste2 = const i0.Value.absent(),
     this.teste3 = const i0.Value.absent(),
     this.teste4 = const i0.Value.absent(),
+    this.teste5 = const i0.Value.absent(),
     this.content = const i0.Value.absent(),
   });
   static i0.Insertable<i1.TesteData> custom({
@@ -269,6 +301,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
     i0.Expression<String>? teste2,
     i0.Expression<String>? teste3,
     i0.Expression<String>? teste4,
+    i0.Expression<String>? teste5,
     i0.Expression<String>? content,
   }) {
     return i0.RawValuesInsertable({
@@ -277,6 +310,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
       if (teste2 != null) 'teste2': teste2,
       if (teste3 != null) 'teste3': teste3,
       if (teste4 != null) 'teste4': teste4,
+      if (teste5 != null) 'teste5': teste5,
       if (content != null) 'content': content,
     });
   }
@@ -287,6 +321,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
       i0.Value<String?>? teste2,
       i0.Value<String?>? teste3,
       i0.Value<String?>? teste4,
+      i0.Value<String?>? teste5,
       i0.Value<String?>? content}) {
     return i1.TesteCompanion(
       id: id ?? this.id,
@@ -294,6 +329,7 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
       teste2: teste2 ?? this.teste2,
       teste3: teste3 ?? this.teste3,
       teste4: teste4 ?? this.teste4,
+      teste5: teste5 ?? this.teste5,
       content: content ?? this.content,
     );
   }
@@ -316,6 +352,9 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
     if (teste4.present) {
       map['teste4'] = i0.Variable<String>(teste4.value);
     }
+    if (teste5.present) {
+      map['teste5'] = i0.Variable<String>(teste5.value);
+    }
     if (content.present) {
       map['content'] = i0.Variable<String>(content.value);
     }
@@ -324,12 +363,13 @@ class TesteCompanion extends i0.UpdateCompanion<i1.TesteData> {
 
   @override
   String toString() {
-    return (StringBuffer('i1.TesteCompanion(')
+    return (StringBuffer('TesteCompanion(')
           ..write('id: $id, ')
           ..write('teste: $teste, ')
           ..write('teste2: $teste2, ')
           ..write('teste3: $teste3, ')
           ..write('teste4: $teste4, ')
+          ..write('teste5: $teste5, ')
           ..write('content: $content')
           ..write(')'))
         .toString();

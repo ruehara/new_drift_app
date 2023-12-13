@@ -1,3 +1,4 @@
+// ignore_for_file: type=lint
 import 'package:drift/drift.dart' as i0;
 import 'package:new_app_drift/database/tables/teste.drift.dart' as i1;
 import 'package:new_app_drift/database/tables/users.drift.dart' as i2;
@@ -67,7 +68,4 @@ abstract class $Database extends i0.GeneratedDatabase {
           ),
         ],
       );
-  @override
-  i0.DriftDatabaseOptions get options =>
-      const i0.DriftDatabaseOptions(storeDateTimeAsText: true);
 }

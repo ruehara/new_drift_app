@@ -31,7 +31,7 @@ class ContatoPage extends StatelessWidget {
               } else if (state is ContatoLoadedState) {
                 List<User>? userList = state.contatos; //state.contatos;
                 return ListView.builder(
-                  itemCount: userList?.length,
+                  itemCount: userList?.length, //userList
                   itemBuilder: (_, index) {
                     return Card(
                       elevation: 4,

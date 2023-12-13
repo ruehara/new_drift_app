@@ -18,7 +18,7 @@ class Database extends $Database {
   Database(super.e);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration {
@@ -37,6 +37,10 @@ class Database extends $Database {
             case 4:
               // column was added in version 4.
               await m.addColumn(teste, teste.teste4);
+              break;
+            case 5:
+              // column was added in version 4.
+              await m.addColumn(teste, teste.teste5);
               break;
           }
         }

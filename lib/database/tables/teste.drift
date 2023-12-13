@@ -5,6 +5,7 @@ CREATE TABLE teste (
   teste2 TEXT,
   teste3 TEXT,
   teste4 TEXT,
+  teste5 TEXT,
   content TEXT
 );
 

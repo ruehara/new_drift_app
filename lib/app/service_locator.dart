@@ -1,4 +1,4 @@
-import 'package:drift/native.dart';
+import 'package:drift/drift.dart';
 import 'package:new_app_drift/library.dart';
 import 'package:new_app_drift/database/connection/native.dart';
 import 'package:new_app_drift/database/database.dart';
@@ -20,6 +20,6 @@ Future<void> loadServiceLocator() async {
   serviceLocator.registerLazySingleton<CounterCubit>(() => CounterCubit());
   serviceLocator.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   serviceLocator.registerLazySingleton<LanguageCubit>(() => LanguageCubit());
-  serviceLocator.registerSingleton<Database>(
-      Database(NativeDatabase.createInBackground(await databaseFile)));
+  serviceLocator
+      .registerSingleton<Database>(Database(DatabaseConnection(connect())));
 }

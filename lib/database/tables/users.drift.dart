@@ -48,9 +48,10 @@ class Users extends i0.Table with i0.TableInfo<Users, i1.User> {
   List<i0.GeneratedColumn> get $columns =>
       [id, name, biography, preferences, profilePicture];
   @override
-  String get aliasedName => _alias ?? 'users';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'users';
+  String get actualTableName => $name;
+  static const String $name = 'users';
   @override
   i0.VerificationContext validateIntegrity(i0.Insertable<i1.User> instance,
       {bool isInserting = false}) {
@@ -134,8 +135,8 @@ class User extends i0.DataClass implements i0.Insertable<i1.User> {
       map['biography'] = i0.Variable<String>(biography);
     }
     if (!nullToAbsent || preferences != null) {
-      final converter = i1.Users.$converterpreferencesn;
-      map['preferences'] = i0.Variable<String>(converter.toSql(preferences));
+      map['preferences'] = i0.Variable<String>(
+          i1.Users.$converterpreferencesn.toSql(preferences));
     }
     if (!nullToAbsent || profilePicture != null) {
       map['profile_picture'] = i0.Variable<i3.Uint8List>(profilePicture);
@@ -290,9 +291,8 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
       map['biography'] = i0.Variable<String>(biography.value);
     }
     if (preferences.present) {
-      final converter = i1.Users.$converterpreferencesn;
-      map['preferences'] =
-          i0.Variable<String>(converter.toSql(preferences.value));
+      map['preferences'] = i0.Variable<String>(
+          i1.Users.$converterpreferencesn.toSql(preferences.value));
     }
     if (profilePicture.present) {
       map['profile_picture'] = i0.Variable<i3.Uint8List>(profilePicture.value);
@@ -302,7 +302,7 @@ class UsersCompanion extends i0.UpdateCompanion<i1.User> {
 
   @override
   String toString() {
-    return (StringBuffer('i1.UsersCompanion(')
+    return (StringBuffer('UsersCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('biography: $biography, ')
@@ -338,9 +338,10 @@ class Follows extends i0.Table with i0.TableInfo<Follows, i1.Follow> {
   @override
   List<i0.GeneratedColumn> get $columns => [followed, follower];
   @override
-  String get aliasedName => _alias ?? 'follows';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'follows';
+  String get actualTableName => $name;
+  static const String $name = 'follows';
   @override
   i0.VerificationContext validateIntegrity(i0.Insertable<i1.Follow> instance,
       {bool isInserting = false}) {
@@ -500,7 +501,7 @@ class FollowsCompanion extends i0.UpdateCompanion<i1.Follow> {
 
   @override
   String toString() {
-    return (StringBuffer('i1.FollowsCompanion(')
+    return (StringBuffer('FollowsCompanion(')
           ..write('followed: $followed, ')
           ..write('follower: $follower, ')
           ..write('rowid: $rowid')
@@ -602,8 +603,10 @@ class PopularUsers extends i0.ViewInfo<i1.PopularUsers, i1.PopularUser>
   @override
   String get entityName => 'popular_users';
   @override
-  String get createViewStmt =>
-      'CREATE VIEW popular_users AS SELECT * FROM users ORDER BY (SELECT count(*) FROM follows WHERE followed = users.id)';
+  Map<i0.SqlDialect, String> get createViewStatements => {
+        i0.SqlDialect.sqlite:
+            'CREATE VIEW popular_users AS SELECT * FROM users ORDER BY (SELECT count(*) FROM follows WHERE followed = users.id)',
+      };
   @override
   PopularUsers get asDslTable => this;
   @override

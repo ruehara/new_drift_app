@@ -64,9 +64,13 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return WillPopScope(
-      onWillPop: () async {
-        return exitApp();
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if (didPop) {
+          return;
+        }
+        exitApp();
       },
       child: BlocBuilder<CounterCubit, int>(
         builder: (context, state) {
@@ -99,7 +103,7 @@ class _CounterViewState extends State<CounterView> with WidgetsBindingObserver {
                 FloatingActionButton(
                   heroTag: const Text('db'),
                   mini: true,
-                  onPressed: () => context.pushNamed('contato'),
+                  onPressed: () => context.push('/contato'),
                   child: const Icon(Icons.data_usage),
                 ),
                 const SizedBox(height: 8),
