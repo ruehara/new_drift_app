@@ -1,3 +1,6 @@
 {
-    "cmake.sourceDirectory": "C:/Users/Rodrigo/Desktop/new_app_drift/build/windows/_deps/sqlite3-subbuild"
+    "cmake.sourceDirectory": "C:/Users/Rodrigo/Desktop/new_app_drift/build/windows/_deps/sqlite3-subbuild",
+    "files.exclude": {
+        "**/*.drift.dart": true
+    }
 }

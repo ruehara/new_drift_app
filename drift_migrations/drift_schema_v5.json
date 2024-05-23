@@ -1,1 +1,443 @@
-{"_meta":{"description":"This file contains a serialized version of schema entities for drift.","version":"1.1.0"},"options":{"store_date_time_values_as_text":false},"entities":[{"id":0,"references":[],"type":"table","data":{"name":"teste","was_declared_in_moor":true,"columns":[{"name":"id","getter_name":"id","moor_type":"int","nullable":false,"customConstraints":"PRIMARY KEY","default_dart":null,"default_client_dart":null,"dsl_features":["primary-key"]},{"name":"teste","getter_name":"teste","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"teste2","getter_name":"teste2","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"teste3","getter_name":"teste3","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"teste4","getter_name":"teste4","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"teste5","getter_name":"teste5","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"content","getter_name":"content","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]}],"is_virtual":false,"without_rowid":false,"constraints":[]}},{"id":1,"references":[],"type":"table","data":{"name":"users","was_declared_in_moor":true,"columns":[{"name":"id","getter_name":"id","moor_type":"int","nullable":false,"customConstraints":"NOT NULL PRIMARY KEY","default_dart":null,"default_client_dart":null,"dsl_features":["primary-key"]},{"name":"name","getter_name":"name","moor_type":"string","nullable":false,"customConstraints":"NOT NULL","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"biography","getter_name":"biography","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"preferences","getter_name":"preferences","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[],"type_converter":{"dart_expr":"const PreferencesConverter()","dart_type_name":"Preferences"}},{"name":"profile_picture","getter_name":"profilePicture","moor_type":"blob","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]}],"is_virtual":false,"without_rowid":false,"constraints":[]}},{"id":2,"references":[1],"type":"table","data":{"name":"posts","was_declared_in_moor":true,"columns":[{"name":"id","getter_name":"id","moor_type":"int","nullable":false,"customConstraints":"PRIMARY KEY","default_dart":null,"default_client_dart":null,"dsl_features":["primary-key"]},{"name":"author","getter_name":"author","moor_type":"int","nullable":false,"customConstraints":"NOT NULL REFERENCES users(id)","default_dart":null,"default_client_dart":null,"dsl_features":["unknown"]},{"name":"content","getter_name":"content","moor_type":"string","nullable":true,"customConstraints":"","default_dart":null,"default_client_dart":null,"dsl_features":[]}],"is_virtual":false,"without_rowid":false,"constraints":[]}},{"id":3,"references":[2],"type":"trigger","data":{"on":2,"references_in_body":[2],"name":"posts_insert","sql":"CREATE TRIGGER posts_insert AFTER INSERT ON posts BEGIN\n  INSERT INTO search_in_posts (rowid, author, content) VALUES (new.id, new.author, new.content);\nEND;"}},{"id":4,"references":[2],"type":"trigger","data":{"on":2,"references_in_body":[2],"name":"posts_update","sql":"CREATE TRIGGER posts_update AFTER UPDATE ON posts BEGIN\n  INSERT INTO search_in_posts (search_in_posts, rowid, author, content) VALUES ('delete', old.id, old.author, old.content);\n  INSERT INTO search_in_posts (rowid, author, content) VALUES (new.id, new.author, new.content);\nEND;"}},{"id":5,"references":[2],"type":"trigger","data":{"on":2,"references_in_body":[2],"name":"posts_delete","sql":"CREATE TRIGGER posts_delete AFTER DELETE ON posts BEGIN\n  INSERT INTO search_in_posts (search_in_posts, rowid, author, content) VALUES ('delete', old.id, old.author, old.content);\nEND;"}},{"id":6,"references":[2,1],"type":"table","data":{"name":"likes","was_declared_in_moor":true,"columns":[{"name":"post","getter_name":"post","moor_type":"int","nullable":false,"customConstraints":"NOT NULL REFERENCES posts(id)","default_dart":null,"default_client_dart":null,"dsl_features":["unknown"]},{"name":"liked_by","getter_name":"likedBy","moor_type":"int","nullable":false,"customConstraints":"NOT NULL REFERENCES users(id)","default_dart":null,"default_client_dart":null,"dsl_features":["unknown"]}],"is_virtual":false,"without_rowid":false,"constraints":[]}},{"id":7,"references":[1],"type":"table","data":{"name":"follows","was_declared_in_moor":true,"columns":[{"name":"followed","getter_name":"followed","moor_type":"int","nullable":false,"customConstraints":"NOT NULL REFERENCES users(id)","default_dart":null,"default_client_dart":null,"dsl_features":["unknown"]},{"name":"follower","getter_name":"follower","moor_type":"int","nullable":false,"customConstraints":"NOT NULL REFERENCES users(id)","default_dart":null,"default_client_dart":null,"dsl_features":["unknown"]}],"is_virtual":false,"without_rowid":false,"constraints":["PRIMARY KEY(followed, follower)"],"explicit_pk":["followed","follower"]}},{"id":8,"references":[1,7],"type":"view","data":{"name":"popular_users","sql":"CREATE VIEW popular_users AS SELECT * FROM users ORDER BY (SELECT count(*) FROM follows WHERE followed = users.id);","dart_info_name":"PopularUsers","columns":[{"name":"id","getter_name":"id","moor_type":"int","nullable":false,"customConstraints":null,"default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"name","getter_name":"name","moor_type":"string","nullable":false,"customConstraints":null,"default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"biography","getter_name":"biography","moor_type":"string","nullable":true,"customConstraints":null,"default_dart":null,"default_client_dart":null,"dsl_features":[]},{"name":"preferences","getter_name":"preferences","moor_type":"string","nullable":true,"customConstraints":null,"default_dart":null,"default_client_dart":null,"dsl_features":[],"type_converter":{"dart_expr":"const PreferencesConverter()","dart_type_name":"Preferences"}},{"name":"profile_picture","getter_name":"profilePicture","moor_type":"blob","nullable":true,"customConstraints":null,"default_dart":null,"default_client_dart":null,"dsl_features":[]}]}},{"id":9,"references":[1],"type":"index","data":{"on":1,"name":"users_name","sql":"CREATE INDEX users_name ON users (name);","unique":false,"columns":[]}},{"id":10,"references":[1],"type":"special-query","data":{"scenario":"create","sql":"UPDATE users SET id = id + 1"}}]}
+{
+    "_meta": {
+        "description": "This file contains a serialized version of schema entities for drift.",
+        "version": "1.1.0"
+    },
+    "options": {
+        "store_date_time_values_as_text": false
+    },
+    "entities": [
+        {
+            "id": 0,
+            "references": [],
+            "type": "table",
+            "data": {
+                "name": "teste",
+                "was_declared_in_moor": true,
+                "columns": [
+                    {
+                        "name": "id",
+                        "getter_name": "id",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "PRIMARY KEY",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "primary-key"
+                        ]
+                    },
+                    {
+                        "name": "teste",
+                        "getter_name": "teste",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "teste2",
+                        "getter_name": "teste2",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "teste3",
+                        "getter_name": "teste3",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "teste4",
+                        "getter_name": "teste4",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "teste5",
+                        "getter_name": "teste5",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "content",
+                        "getter_name": "content",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    }
+                ],
+                "is_virtual": false,
+                "without_rowid": false,
+                "constraints": []
+            }
+        },
+        {
+            "id": 1,
+            "references": [],
+            "type": "table",
+            "data": {
+                "name": "users",
+                "was_declared_in_moor": true,
+                "columns": [
+                    {
+                        "name": "id",
+                        "getter_name": "id",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL PRIMARY KEY",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "primary-key"
+                        ]
+                    },
+                    {
+                        "name": "name",
+                        "getter_name": "name",
+                        "moor_type": "string",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "biography",
+                        "getter_name": "biography",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "preferences",
+                        "getter_name": "preferences",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [],
+                        "type_converter": {
+                            "dart_expr": "const PreferencesConverter()",
+                            "dart_type_name": "Preferences"
+                        }
+                    },
+                    {
+                        "name": "profile_picture",
+                        "getter_name": "profilePicture",
+                        "moor_type": "blob",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    }
+                ],
+                "is_virtual": false,
+                "without_rowid": false,
+                "constraints": []
+            }
+        },
+        {
+            "id": 2,
+            "references": [
+                1
+            ],
+            "type": "table",
+            "data": {
+                "name": "posts",
+                "was_declared_in_moor": true,
+                "columns": [
+                    {
+                        "name": "id",
+                        "getter_name": "id",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "PRIMARY KEY",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "primary-key"
+                        ]
+                    },
+                    {
+                        "name": "author",
+                        "getter_name": "author",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL REFERENCES users(id)",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "unknown"
+                        ]
+                    },
+                    {
+                        "name": "content",
+                        "getter_name": "content",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": "",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    }
+                ],
+                "is_virtual": false,
+                "without_rowid": false,
+                "constraints": []
+            }
+        },
+        {
+            "id": 3,
+            "references": [
+                2
+            ],
+            "type": "trigger",
+            "data": {
+                "on": 2,
+                "references_in_body": [
+                    2
+                ],
+                "name": "posts_insert",
+                "sql": "CREATE TRIGGER posts_insert AFTER INSERT ON posts BEGIN\n  INSERT INTO search_in_posts (rowid, author, content) VALUES (new.id, new.author, new.content);\nEND;"
+            }
+        },
+        {
+            "id": 4,
+            "references": [
+                2
+            ],
+            "type": "trigger",
+            "data": {
+                "on": 2,
+                "references_in_body": [
+                    2
+                ],
+                "name": "posts_update",
+                "sql": "CREATE TRIGGER posts_update AFTER UPDATE ON posts BEGIN\n  INSERT INTO search_in_posts (search_in_posts, rowid, author, content) VALUES ('delete', old.id, old.author, old.content);\n  INSERT INTO search_in_posts (rowid, author, content) VALUES (new.id, new.author, new.content);\nEND;"
+            }
+        },
+        {
+            "id": 5,
+            "references": [
+                2
+            ],
+            "type": "trigger",
+            "data": {
+                "on": 2,
+                "references_in_body": [
+                    2
+                ],
+                "name": "posts_delete",
+                "sql": "CREATE TRIGGER posts_delete AFTER DELETE ON posts BEGIN\n  INSERT INTO search_in_posts (search_in_posts, rowid, author, content) VALUES ('delete', old.id, old.author, old.content);\nEND;"
+            }
+        },
+        {
+            "id": 6,
+            "references": [
+                2,
+                1
+            ],
+            "type": "table",
+            "data": {
+                "name": "likes",
+                "was_declared_in_moor": true,
+                "columns": [
+                    {
+                        "name": "post",
+                        "getter_name": "post",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL REFERENCES posts(id)",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "unknown"
+                        ]
+                    },
+                    {
+                        "name": "liked_by",
+                        "getter_name": "likedBy",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL REFERENCES users(id)",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "unknown"
+                        ]
+                    }
+                ],
+                "is_virtual": false,
+                "without_rowid": false,
+                "constraints": []
+            }
+        },
+        {
+            "id": 7,
+            "references": [
+                1
+            ],
+            "type": "table",
+            "data": {
+                "name": "follows",
+                "was_declared_in_moor": true,
+                "columns": [
+                    {
+                        "name": "followed",
+                        "getter_name": "followed",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL REFERENCES users(id)",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "unknown"
+                        ]
+                    },
+                    {
+                        "name": "follower",
+                        "getter_name": "follower",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": "NOT NULL REFERENCES users(id)",
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [
+                            "unknown"
+                        ]
+                    }
+                ],
+                "is_virtual": false,
+                "without_rowid": false,
+                "constraints": [
+                    "PRIMARY KEY(followed, follower)"
+                ],
+                "explicit_pk": [
+                    "followed",
+                    "follower"
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "references": [
+                1,
+                7
+            ],
+            "type": "view",
+            "data": {
+                "name": "popular_users",
+                "sql": "CREATE VIEW popular_users AS SELECT * FROM users ORDER BY (SELECT count(*) FROM follows WHERE followed = users.id);",
+                "dart_info_name": "PopularUsers",
+                "columns": [
+                    {
+                        "name": "id",
+                        "getter_name": "id",
+                        "moor_type": "int",
+                        "nullable": false,
+                        "customConstraints": null,
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "name",
+                        "getter_name": "name",
+                        "moor_type": "string",
+                        "nullable": false,
+                        "customConstraints": null,
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "biography",
+                        "getter_name": "biography",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": null,
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    },
+                    {
+                        "name": "preferences",
+                        "getter_name": "preferences",
+                        "moor_type": "string",
+                        "nullable": true,
+                        "customConstraints": null,
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": [],
+                        "type_converter": {
+                            "dart_expr": "const PreferencesConverter()",
+                            "dart_type_name": "Preferences"
+                        }
+                    },
+                    {
+                        "name": "profile_picture",
+                        "getter_name": "profilePicture",
+                        "moor_type": "blob",
+                        "nullable": true,
+                        "customConstraints": null,
+                        "default_dart": null,
+                        "default_client_dart": null,
+                        "dsl_features": []
+                    }
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "references": [
+                1
+            ],
+            "type": "index",
+            "data": {
+                "on": 1,
+                "name": "users_name",
+                "sql": "CREATE INDEX users_name ON users (name);",
+                "unique": false,
+                "columns": []
+            }
+        },
+        {
+            "id": 10,
+            "references": [
+                1
+            ],
+            "type": "special-query",
+            "data": {
+                "scenario": "create",
+                "sql": "UPDATE users SET id = id + 1"
+            }
+        }
+    ]
+}

@@ -10,7 +10,6 @@
           "type": "dart",
           "program": "lib/main.dart",
           "args": [
-            "--flavor", "development", 
             "--target", "lib/main.dart", 
             "--dart-define", "app_flavor=development",
             "--dart-define", "BASE_URL=https://app.dev.example.com",
@@ -23,7 +22,6 @@
           "type": "dart",
           "program": "lib/main.dart",
           "args": [
-            "--flavor", "staging", 
             "--target", "lib/main.dart", 
             "--dart-define", "app_flavor=staging",
             "--dart-define", "BASE_URL=https://app.qa.example.com",
@@ -36,7 +34,6 @@
           "type": "dart",
           "program": "lib/main.dart",
           "args": [
-            "--flavor", "production", 
             "--target", "lib/main.dart", 
             "--dart-define", "app_flavor=production",
             "--dart-define", "BASE_URL=https://app.example.com",
