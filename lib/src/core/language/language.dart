@@ -1,2 +1,2 @@
-export 'cubit/language_cubit.dart';
+export 'bloc/language_cubit.dart';
 export 'localization/l10n.dart';

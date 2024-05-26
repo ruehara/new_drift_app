@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app_drift/library.dart';
+import 'package:new_app_drift/src/core/theme/_theme.dart';
 import '../../modules/counter/counter.dart';
 
 abstract class AppSharedPreferences {
@@ -11,10 +12,11 @@ abstract class AppSharedPreferences {
   void setCounter(int counter);
   void setThemeMode(String theme);
 
-  void clearAll();
   void removeCounter();
   void removeTheme();
   void removeLocale();
+
+  void clearAll();
 }
 
 class AppSharedPreferencesImpl extends AppSharedPreferences {

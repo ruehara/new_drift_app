@@ -1,2 +1,2 @@
-export 'cubit/counter_cubit.dart';
-export 'view/counter_page.dart';
+export 'presenter/cubit/counter_cubit.dart';
+export 'presenter/pages/counter_page.dart';
