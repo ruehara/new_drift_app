@@ -5,7 +5,7 @@ version: 1.0.0+1
 
 
 environment:
-  sdk: '>=3.3.3 < 4.0.0'
+  sdk: '>=3.4.3 < 4.0.0'
 
 
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
   drift: ^2.18.0
   sqlite3_flutter_libs: ^0.5.22
   sqlite3: ^2.4.3
-  go_router: ^12.1.3 # versões mais recentes possuem o bug do WillPopScope - Mantenha a versão 12.1.3
+  go_router: ^12.1.3 # versões mais recentes possuem o bug do WillPopScope - Mantenha a versão 12.1.3 até a solução do problema
   path_provider: ^2.1.3
   path: ^1.9.0
   cupertino_icons: ^1.0.8
